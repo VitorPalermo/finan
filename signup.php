@@ -65,18 +65,20 @@
 </html>
 
 <script type="text/javascript">
-  var password = document.getElementById("password"),
-  confirm_password = document.getElementById("confirm_password");
+var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
 
-
-  function validatePassword(){
-    if(password.value != confirm_password.value){
-      confirm_password.setCustomValidity("senhas diferentes");
-    } else {
-      confirm_password.setCSustomValidity('');
-
-    }
+function validatePassword(){
+  if(password.value != confirm_password) {
+    confirm_password.setCustomValidity("Senhas diferentes");
+  } else {
+    confirm_password.setCustomValidity('');
   }
-  password.onchange = validatePassword;
-  confirm_password.onKeyup = validatePassword;
+  if(password.value == '' || confirm_password.value == ''){
+    confirm_password.setCustomValidity("Por favor, coloque a senha");
+  }else{
+    confirm_password.setCustomValidity('');
+  }
+}
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
 </script>
