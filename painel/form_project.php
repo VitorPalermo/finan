@@ -51,7 +51,7 @@
 							</div>
 
 							<div class="card-body">
-								<?php
+								
 
 								<form action="_insert_project.php" method="post" enctype='multipart/form-data'>
 									<div class="form-group">
