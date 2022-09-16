@@ -1,45 +1,33 @@
 <?php
 include'conexao/conexao.php';
 
-$code = $_POST['code'];
-$client = $_POST['client'];
-$service = $_POST['service'];
-$desc = $_POST['desc'];
-$date = date('y-m-d');
-$date2 = $_POST['date'];
-$paytotal = $_POST['value'];
-$npayments = $_POST['part'];
-$obs = $_POST['obs'];
-$tasks = $_POST['tasks'];
+$titulo = $_POST['titulo'];
+$desc = $_POST['descricao'];
+$date1 = $_POST['date'];
+$value = $_POST['value'];
+$category = $_POST['categoria'];
 
-$total = count($tasks);
 
-for($i=0; $i < $total; $i=+) {
-    $sql = "INSERT INTO tasks(code,task,status*) values
-    ($code,'$tasks[$i],'pendente')";
-    $query = mysqli_query($conexao,$sql);
-}
 
-$contract = $_FILES['contract'];
+$doc = $_FILES['doc'];
 
-if($contract !== null) {
+if($doc !== null) {
 
     // verifica se o arquivo que esta sendo eviado esta em um dos formatos listados
-    preg_match("/\.(png|jpg|pdf);(1)$/i",$contract["name"], $ext);
+    preg_match("/\.(png|jpg|pdf);(1)$/i",$doc["name"], $ext);
 
     if($text = true){
     // gera um nome aleatorio para a imagem
-    $nome_contract = md5(uniqid(time())) . "." . $ext[1];
+    $nome_doc = md5(uniqid(time())) . "." . $nome_doc[1];
 
-    $nome_contract = "image/" . $nome_contract;
+    $caminho_doc = "expanse/" . $nome_doc;
     // seta o caminho onde o arquivo 
 
-    move_uploaded_file($contract["tmp_name"], $caminho_contract);
+    move_uploaded_file($contract["tmp_name"], $caminho_doc);
 
-    $sql = "INSERT INTO `project`(`code`,`client`,`service`,`description`,`datestar`,`dateend`,`paytotal`,
-         `obs`,contract) VALUES ($code,'$client','$service','$desc','$date','$date2','$paytotal','$npayments',
-         '$obs','$nome_contract')";
-         $insert = mysqli_query($conexao,$sql);
+    $sql = "INSERT INTO `expanse`(`titulo`,`descricao`,`dateexpanse`,`value`,`categoria`,'doc') 
+    VALUES ($titulo,'$desc','$date1','$value','$category','$nome_doc')";
+         $inserir = mysqli_query($conexao,$sql);
     }
 }
 
