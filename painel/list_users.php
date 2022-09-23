@@ -98,8 +98,23 @@
 					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
-					
-						
+						<?php
+						if(isset($_GET['msg'])) {
+							if($_GET['msg'] == 1) {?>
+								<div class="alert alert-success" role="alert">
+									Alterado com Sucesso!
+								</div>
+
+							<?php } else { ?>
+
+								<div class="alert alert-danger" role="alert">
+									Excluído com Sucesso!
+								</div>
+
+
+							<?php }
+
+						}	?>
 						<div class="card mb-3">
 							<div class="card-header">
 								<h3><i class="far fa-check-square"></i> List Users</h3>
@@ -117,31 +132,65 @@
 														<tr>
 															<th>Name</th>
 															<th>Telephone</th>
-													
+															<?php
+															if ($nivelUser == 3) {
+
+															} else {?>
 																<th>Action</th>
-									
+															<?php }															
+
+															?>
 														</tr>
 													</thead>
 													<tbody>
-										
-															<tr>
-																<td></td>
-																<td></td>
+														<?php
 
+														include 'conexao/conexao.php';
+														$sql = "SELECT * FROM usuario";
+														$search = mysqli_query($conexao,$sql);
+
+														while($array = mysqli_fetch_array($search)) {
+															$id = $array['id'];
+															$name = $array['name'];
+															$mail = $array['mail'];
+															$tel = $array['tel'];
+															
+
+															?>
+															<tr>
+																<td><?php echo $name ?></td>
+																<td><?php echo $tel ?></td>
+
+
+																<?php
+																if ($nivelUser == 3) {
+
+																} else { ?>
 																	<td>
-																		<button type="button" class="btn btn-warning" title="Edit" data-toggle="modal" data-target="#editModal" data-id="" data-name="" data-mail="" data-tel="" data-nivel=""><i class="fas fa-user-edit"></i></button>
+																		<button type="button" class="btn btn-warning" title="Edit" data-toggle="modal"
+																		 data-target="#editModal" data-id="<?php echo $id ?>" 
+																		 data-name="<?php echo $name ?>" data-mail="<?php echo $mail ?>" 
+																		 data-tel="<?php echo $tel ?>" data-nivel="<?php echo $nivel ?>">
+																		 <i class="fas fa-user-edit"></i></button>
 
 																	</button>
 
 
-																		<button type="button" class="btn btn-danger" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id-delete="" data-name-delete=""><i class="fas fa-user-minus"></i></button>
+																	<?php 
+																	if ($nivelUser == 1) { ?>
+																		<button type="button" class="btn btn-danger" 
+																		title="Delete" data-toggle="modal" data-target="#deleteModal" 
+																		data-id-delete="<?php echo $id ?>" data-name-delete="<?php echo $name ?>">
+																		<i class="fas fa-user-minus"></i></button>
 
-																		<button type="button" class="btn btn-primary" title="Nivel" data-toggle="modal" data-target="#nivelModal" data-id-nivel="" ><i class="fas fa-user-plus"></i></button> 
-																	
+																		<button type="button" class="btn btn-primary" title="Nivel" 
+																		data-toggle="modal" data-target="#nivelModal" 
+																		data-id-nivel="<?php echo $id ?>" ><i class="fas fa-user-plus"></i></button> 
+																	<?php } ?>
 
 																	
 																</td>
-															
+															<?php } ?>
 														</tr>
 
 														<!-- Edit Modal -->
@@ -255,7 +304,18 @@
 																				<div class="form-group">
 																					<label for="exampleFormControlSelect1">Nível</label>
 																					<select class="form-control" id="exampleFormControlSelect1" name="nivel">
-																						
+																						<?php
+
+																						$sql = "SELECT * FROM nivel";
+																						$search = mysqli_query($conexao,$sql);
+																						while ($dados = mysqli_fetch_array($search)) {
+																							$value = $dados['value_nivel'];
+																							$name_nivel = $dados['name_nivel'];?>
+
+
+
+																							<option value="<?php echo $value ?>"><?php echo $name_nivel ?></option>
+																						<?php } ?>
 																					</select>
 																				</div>
 
